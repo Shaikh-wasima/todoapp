@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    /* Custom CSS styles */
+    .task-list {
+      margin-top: 20px;
+    }
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #f9f9f9;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  
+    th, td {
+      padding: 15px;
+      text-align: left;
+    }
+  
+    th {
+      background-color: #343a40;
+      color: #fff;
+      font-weight: bold;
+    }
+  
+    td {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+  
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+    }
+  
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+  
+    .btn-danger {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+    }
+  
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+  
+    .btn-success {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+    }
+  
+    .btn-success:hover {
+      background-color: #218838;
+    }
+    
+    .create-task-btn {
+      float: right;
+      margin-bottom: 20px;
+    }
+  </style>
+  <br>
+  <div class="create-task-btn">
+    <a href="{% url 'task_create' %}" class="btn btn-success">Create New Task</a>
+  </div>
+  <h2>Task List</h2>
+  <div class="task-list">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Assigned To</th>
+          <th>Completed</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+          <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.assigned_to.username }}</td>
+            <td>{% if task.completed %}Yes{% else %}No{% endif %}</td>
+            <td>
+              <a href="{% url 'task_update' task.id %}" class="btn btn-primary">Update</a>
+              {% if not request.user.is_superuser %}
+                {% if request.user.is_superuser or request.user == task.created_by %}
+                  <a href="{% url 'task_delete' task.id %}" class="btn btn-danger">Delete</a>
+                {% endif %}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

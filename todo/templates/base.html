@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Todo App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Custom CSS styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul li a:hover {
+            background-color: #45a049;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .blue-box {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .blue-box a {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: white;
+            color: #4CAF50;
+            font-weight: bold;
+            text-decoration: none;
+            border: 2px solid #4CAF50;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .blue-box a:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .logout-button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .logout-button:hover {
+            color: #45a049;
+        }
+
+        .logout-button {
+            position: absolute;
+            top: 15px;
+            right: 10px;
+        }
+        .taskli{
+            position:absolute; left:15px; top:20px;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                <div class="taskli">
+                    <li><a href="{% url 'task_list' %}">Task List</a></li>
+                </div>
+                {% endif %}
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                
+                {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+   
+</body>
+
+
+</html>

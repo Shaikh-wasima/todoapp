@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  
+  .update-task-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    margin-top: -50px;
+  }
+
+  .update-task-form {
+    max-width: 400px;
+    padding: 30px 45px 30px 30px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .update-task-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  .update-task-form label {
+    font-weight: bold;
+    color: #555;
+  }
+
+  .update-task-form input[type="text"],
+  .update-task-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
+  }
+
+  .update-task-form select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
+  }
+
+  .update-task-form input[type="checkbox"] {
+    margin-bottom: 15px;
+    transform: scale(1.2);
+  }
+
+  .update-task-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .update-task-form button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .update-task-form textarea[name="description"] {
+    height: 60px;
+  }
+</style>
+
+<div class="update-task-page">
+  <form class="update-task-form" method="post">
+    {% csrf_token %}
+    <h2>Update Task</h2>
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+</div>
+{% endblock %}
